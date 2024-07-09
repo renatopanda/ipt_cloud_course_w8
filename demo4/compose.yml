@@ -1,0 +1,14 @@
+  services:
+    web:
+      image: 127.0.0.1:5000/counter:latest
+      ports:
+        - "8000:8000"
+      deploy:
+        replicas: 3
+        update_config:
+          parallelism: 2
+          delay: 10s
+        restart_policy:
+          condition: on-failure
+    redis:
+      image: redis:alpine

@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+  portainer:
+    image: portainer/portainer-ce
+    command: -H unix:///var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    ports:
+      - "9002:9000"
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+    networks:
+      - portainer-net
+
+networks:
+  portainer-net:
+    driver: overlay
+
+volumes:
+  portainer_data:

@@ -1,0 +1,24 @@
+version: '3.7'
+
+services:
+  minio:
+    image: minio/minio
+    command: server /data
+    environment:
+      MINIO_ACCESS_KEY: minio
+      MINIO_SECRET_KEY: minio123
+    volumes:
+      - /mnt/glusterfs/minio-data:/data
+    ports:
+      - "9001:9000"
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+    networks:
+      - minio-net
+
+networks:
+  minio-net:
+    driver: overlay

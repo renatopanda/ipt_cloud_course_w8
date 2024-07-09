@@ -1,0 +1,19 @@
+
+services:
+  web:
+    image: 127.0.0.1:5000/demo2
+    build: .
+    ports:
+      - "80:80"
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    networks:
+      - webnet
+
+networks:
+  webnet:
